@@ -6,6 +6,7 @@ import { User } from '../shared/user';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
+  selector: 'app-add-user',
   templateUrl: './add-user.component.html'
 })
 export class AddUserComponent {
@@ -20,7 +21,7 @@ export class AddUserComponent {
    this.userService.createUser(this.user)
         .subscribe( data => {
         //  alert("User created successfully.");
-        this.toast.success("Ustilisateur ajouté avec succcès");
+        this.toast.success("Utilisateur ajouté avec succcès");
         });
         
         this.router.navigate(['users']);

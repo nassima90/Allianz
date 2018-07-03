@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 import { AuthService } from './shared/auth.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpErrorResponse } from '@angular/common/http';
 import { TokenStorage } from './shared/token.storage';
 import { CommonModule } from "@angular/common";
 import { UserComponent } from './user/user.component';
@@ -17,6 +17,10 @@ import { Interceptor } from './shared/app.interceptor';
 import { AddUserComponent } from './user/add-user.component';
 import { EditUserComponent } from './user/edit-user.component';
 import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { Logger } from './shared/logger';
+import {LayoutModule} from '@angular/cdk/layout';
+import {NgForm} from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,12 +37,16 @@ import { ToastrModule } from 'ngx-toastr';
     CommonModule,
     AppRoutingModule,
     HttpModule,
-    ToastrModule.forRoot()
+    BrowserAnimationsModule,
+    ToastrModule.forRoot(),
+    LayoutModule
   ],
-  providers: [AuthService,TokenStorage,UserService,{
+  providers: [AuthService,TokenStorage,UserService,Logger,{
     //activiting interceptor
     provide: HTTP_INTERCEPTORS,
     useClass: Interceptor,
+    //multi:true => This required setting tells Angular that HTTP_INTERCEPTORS is a token for a multiprovider
+    //that injects an array of values , rather than a single value.
     multi: true
   }],
   bootstrap: [AppComponent]
